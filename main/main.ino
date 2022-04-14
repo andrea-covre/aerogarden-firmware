@@ -6,22 +6,20 @@
 #include "Rtc.cpp"
 
 Rtc rtc;
-Lcd screen = Lcd(rtc);
+Lcd screen = Lcd();
 
 void setup() {
   // COMS
   Wire.begin();
   Serial.begin(9600);
-
+  
   // Devices
   rtc.init();
-  rtc.get_time();
+  screen.init(rtc);
 }
 
 //----------------- Loop -----------------
 
 void loop() { 
-
-  //Serial.println(rtc.get_time(), DEC);
 
 }

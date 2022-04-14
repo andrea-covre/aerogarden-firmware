@@ -20,13 +20,12 @@ class Rtc {
       }
     };
  
-    int get_time() {
+    String get_time() {
       DateTime now = rtc.now();
-      Serial.println(now.unixtime());
-      return 2;
+      return (String)now.hour() + ":" + (String)now.minute() + ":" + (String)now.second();
     }
 
-    int get_ts() {
+    uint32_t get_ts() {
       DateTime now = rtc.now();
       return now.unixtime();
     }

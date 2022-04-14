@@ -26,7 +26,7 @@ class Lcd {
     Rtc rtc;
 
     // Animations variables
-    int ts;
+    uint32_t ts;
 
     // Special chars struct
     struct specialChar {
@@ -48,7 +48,7 @@ class Lcd {
     };
     
   public:
-    Lcd(Rtc rtc_obj) {
+    Lcd() {
       // Set up screen
       lcd = new LiquidCrystal(RS, E, D4, D5, D6, D7);
       lcd->begin(width, height);
@@ -56,24 +56,29 @@ class Lcd {
       // Upload special chars
       lcd->createChar(flower.index, flower.charMap);
 
-      // Get current timestamp ts
-      rtc = rtc_obj;
-      ts = rtc.get_ts();
-
       // Start state machine
       this->bootup_screen();
     };
 
-  int print_time() {
-    lcd->clear();
-    lcd->setCursor(3,0);
-    lcd->print("ciao");
-    lcd->print(rtc.get_time());
-  }
+    void init(Rtc rtc_obj) {
+      // Link RTC and get current timestamp
+      rtc = rtc_obj;
+      Serial.println("pre");
+      ts = rtc.get_ts();
+      Serial.println("succ");
+    }
 
-  void update() {
-    
-  };
+    int print_time() {
+      lcd->clear();
+      lcd->setCursor(3,0);
+      lcd->print("ciao");
+      Serial.println(rtc.get_time());
+      lcd->print(rtc.get_time());
+    }
+
+    void update() {
+      
+    };
     
   private:
     void bootup_screen() {
