@@ -1,14 +1,27 @@
-#include "lcd.cpp"
+// Libraries
+#include <Wire.h>
 
+// Modules
+#include "Lcd.cpp"
+#include "Rtc.cpp"
+
+Rtc rtc;
+Lcd screen = Lcd(rtc);
 
 void setup() {
-  //Serial.begin(9600);
-  Lcd screen = Lcd();
-  //screen.boot_up();
+  // COMS
+  Wire.begin();
+  Serial.begin(9600);
+
+  // Devices
+  rtc.init();
+  rtc.get_time();
 }
 
 //----------------- Loop -----------------
 
 void loop() { 
+
+  //Serial.println(rtc.get_time(), DEC);
 
 }

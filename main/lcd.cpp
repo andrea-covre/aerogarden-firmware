@@ -1,4 +1,11 @@
+#ifndef Lcd_cpp
+#define Lcd_cpp
+
+// Libraries
 #include <LiquidCrystal.h>
+
+// Modules
+#include "Rtc.cpp"
 
 class Lcd {
   private:
@@ -14,6 +21,12 @@ class Lcd {
     const int width = 16;
     const int height = 2;
     LiquidCrystal *lcd;
+
+    // Other devices used;
+    Rtc rtc;
+
+    // Animations variables
+    int ts;
 
     // Special chars struct
     struct specialChar {
@@ -35,21 +48,43 @@ class Lcd {
     };
     
   public:
-    Lcd() {
+    Lcd(Rtc rtc_obj) {
+      // Set up screen
       lcd = new LiquidCrystal(RS, E, D4, D5, D6, D7);
       lcd->begin(width, height);
+
+      // Upload special chars
       lcd->createChar(flower.index, flower.charMap);
+
+      // Get current timestamp ts
+      rtc = rtc_obj;
+      ts = rtc.get_ts();
+
+      // Start state machine
       this->bootup_screen();
     };
 
-  void bootup_screen() {
+  int print_time() {
     lcd->clear();
     lcd->setCursor(3,0);
-    lcd->print("Aerogarden");
-    lcd->setCursor(1,0);
-    lcd->write(flower.index);
-    lcd->setCursor(14,0);
-    lcd->write(flower.index);
+    lcd->print("ciao");
+    lcd->print(rtc.get_time());
+  }
+
+  void update() {
+    
   };
-  
+    
+  private:
+    void bootup_screen() {
+      lcd->clear();
+      lcd->setCursor(3,0);
+      lcd->print("Aerogarden");
+      lcd->setCursor(1,0);
+      lcd->write(flower.index);
+      lcd->setCursor(14,0);
+      lcd->write(flower.index);
+    };
 };
+
+#endif
