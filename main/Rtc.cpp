@@ -1,5 +1,5 @@
-#ifndef Rtc_cpp
-#define Rtc_cpp
+#ifndef RTC_cpp
+#define RTC_cpp
 
 #include <Wire.h>
 #include "RTClib.h"
