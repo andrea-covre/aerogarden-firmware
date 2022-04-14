@@ -21,5 +21,5 @@ void setup() {
 //----------------- Loop -----------------
 
 void loop() { 
-
+  screen.update();
 }

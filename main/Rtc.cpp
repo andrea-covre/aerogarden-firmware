@@ -11,7 +11,7 @@ class Rtc {
   public:
     void init() {
       if (! rtc.begin()) {
-        Serial.println("Couldn't find RTC");
+        Serial.println("RTC Module cound NOT be found!");
         while (1);
       }
       if (!rtc.isrunning()) {
@@ -20,9 +20,20 @@ class Rtc {
       }
     };
  
-    String get_time() {
+    String get_time(bool with_seconds = false) {
       DateTime now = rtc.now();
-      return (String)now.hour() + ":" + (String)now.minute() + ":" + (String)now.second();
+      String h = (String) now.hour();
+      String m = (String) now.minute();
+      String s = (String) now.second();
+
+      if (h.length() < 2) {h = "0" + h;}
+      if (m.length() < 2) {m = "0" + m;}
+      if (s.length() < 2) {s = "0" + s;}
+      
+      if (with_seconds) {
+        return h + ":" + m + ":" + s;
+      }
+      return h + ":" + m;
     }
 
     uint32_t get_ts() {
