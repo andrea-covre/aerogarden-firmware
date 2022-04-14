@@ -4,9 +4,11 @@
 // Modules
 #include "Lcd.cpp"
 #include "Rtc.cpp"
+#include "DHT11.cpp"
 
 Rtc rtc;
 Lcd screen = Lcd();
+Dht11 dht;
 
 void setup() {
   // COMS

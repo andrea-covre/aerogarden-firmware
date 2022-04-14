@@ -12,10 +12,10 @@ class Lcd {
     // PINS
     const int RS = 2;
     const int E = 3;
-    const int D4 = 4;
-    const int D5 = 5;
-    const int D6 = 6;
-    const int D7 = 7;
+    const int D4 = 28;   //4
+    const int D5 = 30;   //5
+    const int D6 = 32;   //6
+    const int D7 = 34;  //7
     const int LED = 8;
 
     // Screen properties
@@ -27,8 +27,8 @@ class Lcd {
     Rtc rtc;
 
     // Animations variables
-    int const bootup_view_time = 1;     // s
-    int const dim_down_time = 5;        // s
+    int const bootup_view_time = 4;     // s
+    int const dim_down_time = 10;        // s
     int const dim_down_step_time = 20;  // ms
     int brightness = 255;
     uint32_t led_dim_ts;                // s
@@ -169,7 +169,6 @@ class Lcd {
           analogWrite(LED, brightness);
           led_dim_ts = millis();
         }
-
         break;
         
     }
