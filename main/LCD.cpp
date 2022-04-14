@@ -14,10 +14,10 @@ class Lcd {
     // PINS
     const int RS = 2;
     const int E = 3;
-    const int D4 = 28;   //4
-    const int D5 = 30;   //5
-    const int D6 = 32;   //6
-    const int D7 = 34;  //7
+    const int D4 = 28;
+    const int D5 = 30;
+    const int D6 = 32;
+    const int D7 = 34;
     const int LED = 8;
 
     // Screen properties
@@ -32,7 +32,7 @@ class Lcd {
 
     // Animations variables
     int const bootup_view_time = 5;     // s
-    int const dim_down_time = 30;        // s
+    int const dim_down_time = 30;       // s
     int const dim_down_step_time = 20;  // ms
     int brightness = 255;
     int proximity_state;
