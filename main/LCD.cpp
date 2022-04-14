@@ -112,6 +112,19 @@ class Lcd {
       }
     };
 
+    // clock char
+    struct specialChar clock_char = {5, {
+        0b00000,
+        0b00000,
+        0b01110,
+        0b10101,
+        0b10111,
+        0b10001,
+        0b01110,
+        0b00000
+      }
+    };
+
     // State machine
     enum State {
       RESET,
@@ -136,6 +149,7 @@ class Lcd {
       lcd->createChar(thermo.index, thermo.charMap);
       lcd->createChar(minitree.index, minitree.charMap);
       lcd->createChar(leaf.index, leaf.charMap);
+      lcd->createChar(clock_char.index, clock_char.charMap);
 
       // Start state machine
       state = RESET;
@@ -159,6 +173,7 @@ class Lcd {
 
     void print_time() {
       lcd->setCursor(0,0);
+      lcd->write(clock_char.index);
       lcd->print(rtc.get_time());
     }
 
