@@ -19,7 +19,7 @@ void setup() {
   
   // Devices
   rtc.init();
-  screen.init(rtc, dht, proximity);
+  screen.init(rtc, dht);
 }
 
 //----------------- Loop -----------------

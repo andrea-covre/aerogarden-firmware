@@ -141,11 +141,10 @@ class Lcd {
       state = RESET;
     };
 
-    void init(Rtc rtc_obj, Dht11 dht_obj, Proximity proximity_obj) {
+    void init(Rtc rtc_obj, Dht11 dht_obj) {
       
       // Link other modules
       dht = dht_obj;
-      //proximity = proximity_obj;
       rtc = rtc_obj;
 
       // Get current timestamp
