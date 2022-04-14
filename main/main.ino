@@ -22,8 +22,6 @@ void setup() {
   screen.init(rtc, dht);
 }
 
-//----------------- Loop -----------------
-
 void loop() { 
   screen.update();
 }
