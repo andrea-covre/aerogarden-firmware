@@ -83,16 +83,24 @@ class Lcd {
       return state;
     }
 
-    int print_time() {
-      lcd->clear();
-      lcd->setCursor(3,0);
-      lcd->print("ciao");
-      Serial.println(rtc.get_time());
+    void print_time() {
+      lcd->setCursor(0,0);
       lcd->print(rtc.get_time());
     }
-    
+
+    void print_temp() {
+      lcd->setCursor(7,0);
+      lcd->print("00C");
+    }
+
+    void print_hum() {
+      lcd->setCursor(11,0);
+      lcd->print("00%");
+    }
+
+  // Screen views    
   private:
-    void bootup_screen() {
+    void bootup_view() {
       lcd->clear();
       lcd->setCursor(3,0);
       lcd->print("Aerogarden");
@@ -102,10 +110,20 @@ class Lcd {
       lcd->write(flower.index);
     };
 
+    void default_led_on_view() {
+      lcd->clear();
+      Serial.println("ccc");
+      print_time();
+      print_temp();
+      print_hum();
+    };
+
+    
+  // State machine
   public:void update() {
     switch(state) {
       case RESET:
-        bootup_screen();
+        bootup_view();
         state = BOOTUP;
         state_switch_ts = rtc.get_ts();
         break;
@@ -113,7 +131,14 @@ class Lcd {
       case BOOTUP:
         if (rtc.get_ts() - state_switch_ts > bootup_view_time) {
           state = DEF_LED_ON;
-          lcd->clear();
+          state_switch_ts = rtc.get_ts();
+        }
+        break;
+
+      case DEF_LED_ON:
+        if (rtc.get_ts() > state_switch_ts) {
+          default_led_on_view();
+          state_switch_ts = rtc.get_ts();
         }
         break;
     }

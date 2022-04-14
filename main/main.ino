@@ -22,5 +22,4 @@ void setup() {
 
 void loop() { 
   screen.update();
-  Serial.println("CC");
 }
