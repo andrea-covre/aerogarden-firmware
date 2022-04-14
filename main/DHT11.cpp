@@ -8,7 +8,7 @@ class Dht11 {
     dht DHT;
 
     // PIN
-    const int signal_pin = 31;
+    const static int signal_pin = 31;
 
     // Data
     int refresh_delay = 1000;   // ms
@@ -17,7 +17,7 @@ class Dht11 {
     uint32_t last_update_ts = millis();
 
   private:
-    int read_data() {
+    int update_data() {
       if (millis() - last_update_ts > refresh_delay) {
         int chk = DHT.read11(signal_pin);
         String base_string = "DHT11: ";
@@ -57,12 +57,12 @@ class Dht11 {
 
    public:
      float get_temperature() {
-      read_data();
+      update_data();
       return temperature;
      }
 
      float get_humidity() {
-      read_data();
+      update_data();
       return humidity;
      }
 

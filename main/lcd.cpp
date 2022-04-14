@@ -6,6 +6,7 @@
 
 // Modules
 #include "Rtc.cpp"
+#include "DHT11.cpp"
 
 class Lcd {
   private:
@@ -25,6 +26,7 @@ class Lcd {
 
     // Other devices used;
     Rtc rtc;
+    Dht11 dht;
 
     // Animations variables
     int const bootup_view_time = 4;     // s
@@ -80,12 +82,15 @@ class Lcd {
       state = RESET;
     };
 
-    void init(Rtc rtc_obj) {
+    void init(Rtc rtc_obj, Dht11 dht_obj) {
       // Link RTC and get current timestamp
       rtc = rtc_obj;
       ts = rtc.get_ts();
       state_switch_ts = ts;
       view_update_ts = ts;
+
+      // Link DHT11
+      dht = dht_obj;
     }
 
     State get_state() {
@@ -99,12 +104,12 @@ class Lcd {
 
     void print_temp() {
       lcd->setCursor(7,0);
-      lcd->print("00C");
+      lcd->print((String) (int) dht.get_temperature() + "C");
     }
 
     void print_hum() {
       lcd->setCursor(11,0);
-      lcd->print("00%");
+      lcd->print((String) (int) dht.get_humidity() + "%");
     }
 
   // Screen views    

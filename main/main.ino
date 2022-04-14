@@ -7,8 +7,8 @@
 #include "DHT11.cpp"
 
 Rtc rtc;
-Lcd screen = Lcd();
 Dht11 dht;
+Lcd screen = Lcd();
 
 void setup() {
   // COMS
@@ -17,7 +17,7 @@ void setup() {
   
   // Devices
   rtc.init();
-  screen.init(rtc);
+  screen.init(rtc, dht);
 }
 
 //----------------- Loop -----------------
