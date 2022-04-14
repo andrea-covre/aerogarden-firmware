@@ -26,6 +26,8 @@ class Lcd {
     Rtc rtc;
 
     // Animations variables
+    int const bootup_view_time = 5;
+    uint32_t state_switch_ts = 0; 
     uint32_t ts;
 
     // Special chars struct
@@ -46,6 +48,16 @@ class Lcd {
         0b00100
       }
     };
+
+    // State machine
+    enum State {
+      RESET,
+      BOOTUP,
+      DEF_LED_ON,
+      DEF_LED_OFF
+    };
+
+    enum State state;
     
   public:
     Lcd() {
@@ -57,15 +69,18 @@ class Lcd {
       lcd->createChar(flower.index, flower.charMap);
 
       // Start state machine
-      this->bootup_screen();
+      state = RESET;
     };
 
     void init(Rtc rtc_obj) {
       // Link RTC and get current timestamp
       rtc = rtc_obj;
-      Serial.println("pre");
       ts = rtc.get_ts();
-      Serial.println("succ");
+      state_switch_ts = ts;
+    }
+
+    State get_state() {
+      return state;
     }
 
     int print_time() {
@@ -75,10 +90,6 @@ class Lcd {
       Serial.println(rtc.get_time());
       lcd->print(rtc.get_time());
     }
-
-    void update() {
-      
-    };
     
   private:
     void bootup_screen() {
@@ -90,6 +101,23 @@ class Lcd {
       lcd->setCursor(14,0);
       lcd->write(flower.index);
     };
+
+  public:void update() {
+    switch(state) {
+      case RESET:
+        bootup_screen();
+        state = BOOTUP;
+        state_switch_ts = rtc.get_ts();
+        break;
+        
+      case BOOTUP:
+        if (rtc.get_ts() - state_switch_ts > bootup_view_time) {
+          state = DEF_LED_ON;
+          lcd->clear();
+        }
+        break;
+    }
+  }
 };
 
 #endif

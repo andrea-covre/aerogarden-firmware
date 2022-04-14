@@ -11,7 +11,7 @@ class Rtc {
   public:
     void init() {
       if (! rtc.begin()) {
-        Serial.println("Couldn't find RTC");
+        Serial.println("RTC Module cound NOT be found!");
         while (1);
       }
       if (!rtc.isrunning()) {
