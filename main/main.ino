@@ -2,8 +2,8 @@
 #include <Wire.h>
 
 // Modules
-#include "Lcd.cpp"
-#include "Rtc.cpp"
+#include "LCD.cpp"
+#include "RTC.cpp"
 #include "DHT11.cpp"
 
 Rtc rtc;

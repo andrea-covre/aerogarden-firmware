@@ -1,11 +1,11 @@
-#ifndef Lcd_cpp
-#define Lcd_cpp
+#ifndef LCD_cpp
+#define LCD_cpp
 
 // Libraries
 #include <LiquidCrystal.h>
 
 // Modules
-#include "Rtc.cpp"
+#include "RTC.cpp"
 #include "DHT11.cpp"
 
 class Lcd {
