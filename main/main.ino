@@ -4,8 +4,10 @@
 // Modules
 #include "Lcd.cpp"
 #include "Rtc.cpp"
+#include "DHT11.cpp"
 
 Rtc rtc;
+Dht11 dht;
 Lcd screen = Lcd();
 
 void setup() {
@@ -15,7 +17,7 @@ void setup() {
   
   // Devices
   rtc.init();
-  screen.init(rtc);
+  screen.init(rtc, dht);
 }
 
 //----------------- Loop -----------------
