@@ -29,8 +29,8 @@ class Lcd {
     Dht11 dht;
 
     // Animations variables
-    int const bootup_view_time = 4;     // s
-    int const dim_down_time = 10;        // s
+    int const bootup_view_time = 5;     // s
+    int const dim_down_time = 30;        // s
     int const dim_down_step_time = 20;  // ms
     int brightness = 255;
     uint32_t led_dim_ts;                // s
@@ -57,6 +57,58 @@ class Lcd {
       }
     };
 
+    // Droplet char
+    struct specialChar water_drop = {1, {
+        0b00000,
+        0b00100,
+        0b01110,
+        0b01110,
+        0b11111,
+        0b11111,
+        0b11111,
+        0b01110
+      }
+    };
+
+    // thermo char
+    struct specialChar thermo = {2, {
+        0b00100,
+        0b01010,
+        0b01010,
+        0b01010,
+        0b01110,
+        0b11111,
+        0b11111,
+        0b01110
+      }
+    };
+
+    // minitree char
+    struct specialChar minitree = {3, {
+        0b01110,
+        0b11111,
+        0b11111,
+        0b11111,
+        0b01110,
+        0b00100,
+        0b10101,
+        0b01110
+      }
+    };
+
+    // leaf char
+    struct specialChar leaf = {4, {
+        0b00100,
+        0b01110,
+        0b01110,
+        0b11111,
+        0b11111,
+        0b01110,
+        0b00100,
+        0b00100
+      }
+    };
+
     // State machine
     enum State {
       RESET,
@@ -77,6 +129,10 @@ class Lcd {
 
       // Upload special chars
       lcd->createChar(flower.index, flower.charMap);
+      lcd->createChar(water_drop.index, water_drop.charMap);
+      lcd->createChar(thermo.index, thermo.charMap);
+      lcd->createChar(minitree.index, minitree.charMap);
+      lcd->createChar(leaf.index, leaf.charMap);
 
       // Start state machine
       state = RESET;
@@ -104,11 +160,13 @@ class Lcd {
 
     void print_temp() {
       lcd->setCursor(7,0);
+      lcd->write(thermo.index);
       lcd->print((String) (int) dht.get_temperature() + "C");
     }
 
     void print_hum() {
-      lcd->setCursor(11,0);
+      lcd->setCursor(12,0);
+      lcd->write(water_drop.index);
       lcd->print((String) (int) dht.get_humidity() + "%");
     }
 
@@ -122,6 +180,12 @@ class Lcd {
       lcd->write(flower.index);
       lcd->setCursor(14,0);
       lcd->write(flower.index);
+      for (int i = 0; i < width; i+=2) {
+        lcd->setCursor(i,1);
+        lcd->write(minitree.index);
+        lcd->setCursor(i+1,1);
+        lcd->write(leaf.index);
+      }
     };
 
     void default_led_on_view() {
